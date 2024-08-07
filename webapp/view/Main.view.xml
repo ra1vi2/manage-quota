@@ -1,0 +1,309 @@
+<mvc:View
+    xmlns:smartfield="sap.ui.comp.smartfield"
+    controllerName="vwks.nlp.s2p.mm.mng.quota.controller.Main"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns:layout="sap.ui.layout"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:uxap="sap.uxap"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:table="sap.ui.table"
+    xmlns:svm="sap.ui.comp.smartvariants"
+    xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+    core:require="{ formatMessage: 'sap/base/strings/formatMessage'}"
+    xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+>
+    <f:DynamicPage id="_IDGenDynamicPage1" headerExpanded="true" showFooter="{= ${this>/IsEditMode}}">
+        <f:title>
+            <f:DynamicPageTitle id="idQuotaHeaderTitle">
+                <f:heading>
+                    <svm:SmartVariantManagement id="vwks.nlp.s2p.mm.mng.quota.svm" standardItemText="Standard" persistencyKey="vwks.nlp.s2p.mm.mng.quota" />
+                </f:heading>
+                <f:actions>
+                    <Button id="idShareQuota" icon="sap-icon://action" press="handleShareEmail" type="Transparent" tooltip="{i18n>Share}" />
+                </f:actions>
+            </f:DynamicPageTitle>
+        </f:title>
+        <f:header>
+            <f:DynamicPageHeader id="_IDGenDynamicPageHeader1">
+                <f:content>
+                    <smartFilterBar:SmartFilterBar id="smartFilterBar" smartVariant="vwks.nlp.s2p.mm.mng.quota.svm" useToolbar="false" entitySet="xVWKSxNLP_INTG_C_TREE_QUOTA" search="onClickGo" persistencyKey="vwks.nlp.s2p.mm.mng.quota.sfb" considerSelectionVariants="true" showClearButton="true">
+                        <smartFilterBar:controlConfiguration>
+                            <smartFilterBar:ControlConfiguration key="DocumentType" mandatory="mandatory" />
+                        </smartFilterBar:controlConfiguration>
+                        <smartFilterBar:layoutData>
+                            <FlexItemData id="_IDGenFlexItemData2" shrinkFactor="0" />
+                        </smartFilterBar:layoutData>
+                    </smartFilterBar:SmartFilterBar>
+                </f:content>
+            </f:DynamicPageHeader>
+        </f:header>
+        <f:content>
+            <VBox id="_IDGenVBox1" height="100%" renderType="Bare">
+                <smartTable:SmartTable
+                    id="idQuotaSmartTable"
+                    smartFilterId="smartFilterBar"
+                    entitySet="xVWKSxNLP_INTG_C_TREE_QUOTA"
+                    tableType="TreeTable"
+                    persistencyKey="vwks.nlp.s2p.mm.mng.quota.st"
+                    useTablePersonalisation="true"
+                    header="{i18n>MaterialTableHeader}"
+                    showRowCount="true"
+                    useExportToExcel="false"
+                    enableAutoBinding="false"
+                    beforeRebindTable="onBeforeRebindquotaSmartTable"
+                    height="100%"
+                    showFullScreenButton="true"
+                    requestAtLeastFields="Material,DedicatedQuotaPercentage,QuotaNumberFc,DocumentDisplayData,ActualQuotaCalStatus"
+                    dataReceived="handleQuotaTableDataReceived"
+                    ignoreFromPersonalisation="DocumentNo,Material,DedicatedQuotaPercentage"
+                >
+                    <smartTable:customToolbar>
+                        <OverflowToolbar id="idSmartTableToolbar" design="Transparent">
+                            <ToolbarSpacer id="idSmartTableToolbarSpacer" />
+                            <Button id="idAddQuotaButton" text="{i18n>btnAddQuota}" tooltip="{i18n>btnAddQuota}" press="onAddQuotaPress" type="Transparent" enabled="{this>/IsAddQuotaEnabled}" />
+                            <Button id="idEditQuotaButton" text="{i18n>btnEdit}" tooltip="{i18n>btnEdit}" press="onEditQuotaPress" type="Transparent" enabled="{this>/IsEditEnabled}" />
+                            <Button id="idShowSupplierQuotaButton" text="{i18n>btnShowSupplierQuota}" tooltip="{i18n>btnShowSupplierQuota}" press="onShowSupplierQuotaPress" type="Transparent" enabled="{this>/IsShowSupplierQuotaEnabled}" />
+                        </OverflowToolbar>
+                    </smartTable:customToolbar>
+                    <table:TreeTable id="idCustomTable" threshold="100" rowSelectionChange="onQuotaTableRowSelectionChange" visibleRowCountMode="Auto">
+                        <table:columns>
+                            <!--Material Master Column with hierarchy-->
+                            <table:Column id="idMaterialColumn" width="15rem">
+                                <Label id="idMaterialLabel" text="{/#xVWKSxNLP_INTG_C_TREE_QUOTAType/Material/@sap:label}" />
+                                <table:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "MasterColumnValue","columnIndex":"0", "leadingProperty":"MasterColumnValue"\}' />
+                                </table:customData>
+                                <table:template>
+                                    <Text id="idMaterialText" text="{MasterColumnValue}" wrapping="false" />
+                                </table:template>
+                            </table:Column>
+                            <!--Document Number-->
+                            <table:Column id="idDocumentNumberColumn" width="10rem" hAlign="Center" >
+                                <Label id="idDocumentNumberLabel" text="{/#xVWKSxNLP_INTG_C_TREE_QUOTAType/DocumentNo/@sap:label}" />
+                                <table:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "DocumentDisplayData", "columnIndex":"1", "leadingProperty":"DocumentDisplayData" \}' />
+                                </table:customData>
+                                <table:template>
+                                    <Link id="idDocumentNumberText" visible="{= ${HierarchyNodeLevel} === '05'}" text="{DocumentDisplayData}" press="navigateToDocument" />
+                                </table:template>
+                            </table:Column>
+                            <table:Column id="idQuotationNumberColumn" width="10rem" hAlign="Center"   >
+                                <Label id="idQuotationNumberLabel" text="{/#xVWKSxNLP_INTG_C_TREE_QUOTAType/SourcingQuotation/@sap:label}" />
+                                <table:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "SourcingQuotation", "columnIndex":"2", "leadingProperty":"SourcingQuotation" \}' />
+                                </table:customData>
+                                <table:template>
+                                    <Text id="idQuotationNumberText" wrapping="false" visible="{= ${HierarchyNodeLevel} === '05'}" text="{SourcingQuotation}" />
+                                </table:template>
+                            </table:Column>
+                            <table:Column id="idSourcingProjectNumberColumn" width="10rem" hAlign="Center"   >
+                                <Label id="idSourcingProjectLabel" text="{/#xVWKSxNLP_INTG_C_TREE_QUOTAType/SourcingProject/@sap:label}" />
+                                <table:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "SourcingProject", "columnIndex":"3", "leadingProperty":"SourcingProject" \}' />
+                                </table:customData>
+                                <table:template>
+                                    <Text id="idSourcingProjectText" wrapping="false" visible="{= ${HierarchyNodeLevel} === '05'}" text="{SourcingProject}" />
+                                </table:template>
+                            </table:Column>
+                            <table:Column id="idAwardingScenarioColumn" width="10rem" hAlign="Center"   >
+                                <Label id="idAwardingScenarioLabel" text="{/#xVWKSxNLP_INTG_C_TREE_QUOTAType/AwardingScenario/@sap:label}" />
+                                <table:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "AwardingScenario", "columnIndex":"4", "leadingProperty":"AwardingScenario" \}' />
+                                </table:customData>
+                                <table:template>
+                                    <Text id="idAwardingScenarioText" wrapping="false" visible="{= ${HierarchyNodeLevel} === '05'}" text="{AwardingScenario}" />
+                                </table:template>
+                            </table:Column>
+                            <table:Column id="idAwardingStatusColumn" width="10rem" hAlign="Center"   >
+                                <Label id="idAwardingStatusLabel" text="{/#xVWKSxNLP_INTG_C_TREE_QUOTAType/AwardingStatus/@sap:label}" />
+                                <table:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "AwardingStatus", "columnIndex":"5", "leadingProperty":"AwardingStatus" \}' />
+                                </table:customData>
+                                <table:template>
+                                    <Text id="idAwardingStatusText" wrapping="false" visible="{= ${HierarchyNodeLevel} === '05'}" text="{AwardingStatus}" />
+                                </table:template>
+                            </table:Column>
+                            <table:Column id="idCompanyCodeColumn" width="10rem" hAlign="Center"   >
+                                <Label id="idCompanyCodeLabel" text="{/#xVWKSxNLP_INTG_C_TREE_QUOTAType/CompanyCode/@sap:label}" />
+                                <table:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "CompanyCode", "columnIndex":"6", "leadingProperty":"CompanyCode" \}' />
+                                </table:customData>
+                                <table:template>
+                                    <Text id="idCompanyCodeText" wrapping="false" visible="{= ${HierarchyNodeLevel} === '05'}" text="{CompanyCode}" />
+                                </table:template>
+                            </table:Column>
+                            <table:Column id="idPlantColumn" width="10rem" hAlign="Center"   >
+                                <Label id="idPlantLabel" text="{/#xVWKSxNLP_INTG_C_TREE_QUOTAType/Plant/@sap:label}" />
+                                <table:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "Plant", "columnIndex":"7", "leadingProperty":"Plant" \}' />
+                                </table:customData>
+                                <table:template>
+                                    <Text id="idPlantText" wrapping="false" visible="{= ${HierarchyNodeLevel} === '05'}" text="{Plant}" />
+                                </table:template>
+                            </table:Column>
+                            <!--Supplier-->
+                            <table:Column id="idSupplierNoColumn" width="10rem">
+                                <Label id="idSupplierNoLabel" text="{/#xVWKSxNLP_INTG_C_TREE_QUOTAType/SupplierNo/@sap:label}" />
+                                <table:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "SupplierNo","additionalProperty":"SupplierName", "columnIndex":"8", "leadingProperty":"SupplierNo"\}' />
+                                </table:customData>
+                                <table:template>
+                                    <Text
+                                        id="idSupplierNoText"
+                                        visible="{= ${HierarchyNodeLevel} === '05'}"
+                                        wrapping="false"
+                                        tooltip="{
+                                        parts: [
+                                            'i18n>supplierNoNameTemplate',
+                                            'SupplierNo',
+                                            'SupplierName'
+                                        ],
+                                        formatter: 'formatMessage'
+                                    }"
+                                        text="{
+                                        parts: [
+                                            'i18n>supplierNoNameTemplate',
+                                            'SupplierNo',
+                                            'SupplierName'
+                                        ],
+                                        formatter: 'formatMessage'
+                                    }"
+                                    />
+                                </table:template>
+                            </table:Column>
+                            <!--Table Part Material-->
+                            <table:Column id="idTablePartMaterialCol" width="10rem">
+                                <Label id="idTablePartMaterialLabel" text="{/#xVWKSxNLP_INTG_C_TREE_QUOTAType/TablePartMaterial/@sap:label}"/>
+                                <table:customData>
+                                      <core:CustomData key="p13nData" value='\{"columnKey":"TablePartMaterial","columnIndex":"9","leadingProperty":"TablePartMaterial"}'/>
+                                </table:customData>
+                                <table:template>
+                                  <Text id="TablePartMaterialText" wrapping="false" text="{TablePartMaterial}" visible="{= ${HierarchyNodeLevel} === '05'}"/>
+                                </table:template>
+
+                            </table:Column>
+                            <!--Quota Number-->
+                            <table:Column id="idQuotaNumberColumn" width="8rem" hAlign="Right" >
+                                <Label id="idQuotaNumberLabel" text="{/#xVWKSxNLP_INTG_C_TREE_QUOTAType/QuotaNumber/@sap:label}"></Label>
+                                <table:customData >
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "QuotaNumber","columnIndex":"10", "leadingProperty":"QuotaNumber"\}'/>
+                                </table:customData>
+                                <table:template>
+                                    <VBox visible="{= ${HierarchyNodeLevel} === '05'}">
+                                        <Text id="idQuotaNumberText" visible="{parts : [ 'Material'  , 'QuotaNumberFc' , 'this>/editableMaterial' ], formatter : '.getEditableQuotaText'}" text="{QuotaNumber}" textAlign="Right" />
+                                        <Input id="idQuotaNumberInput" visible="{parts : [ 'Material' , 'QuotaNumberFc' , 'this>/editableMaterial' ] , formatter : '.getEditableQuotaInput'}" 
+                                        valueStateText="{i18n>invalidQuotaNumberError}" value="{path: 'QuotaNumber', parameters: {groupId: 'idQuotaNumberInputGroup'}}" type="Number" change="onChangeQuotaNumber" />
+                                    </VBox>
+                                </table:template>
+                            </table:Column>
+                            <!--Actual Quota-->
+                            <table:Column id="idActualQuotaColumn" width="8rem" hAlign="Right"  >
+                                <Label id="idActualQuotaLabel" text="{i18n>ActualQuota}"/>
+                                <table:customData >
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "ActualQuota", "columnIndex":"11"\}'/>                               
+                                </table:customData>
+                                <table:template>
+                                    <Text
+                                        id="idActualQuotaText"
+                                        visible="{= ${HierarchyNodeLevel} === '05'}"
+                                        text="{
+                                       parts: [
+                                        'ParentNode',
+                                        'FormatedCode',
+                                        'quotaModel>/isSearchAllowed'
+                                       ],
+                                       formatter: '.formatActualQuotaValue'
+                                   }"
+                                    />
+                                </table:template>
+                            </table:Column>
+                            <!--Status-->
+                            <table:Column id="idDocumentStatusColumn" width="8rem" hAlign="Left"  >
+                                <Label id="idDocumentStatusLabel" text="{/#xVWKSxNLP_INTG_C_TREE_QUOTAType/DocumentStatus/@sap:label}"></Label>
+                                <table:customData >
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "DocumentStatusText","columnIndex":"12" ,"additionalProperty":"DocumentStatus", "leadingProperty":"DocumentStatusText"\}'/>
+                                </table:customData>
+                                <table:template>
+                                    <Text id="idDocumentStatusText" wrapping="false" visible="{= ${HierarchyNodeLevel} === '05'}" text="{DocumentStatusText}" />
+                                </table:template>
+                            </table:Column>
+
+                            <!--Dedicated Quota-->
+                            <table:Column id="idDedicatedQuotaColumn" width="8rem" hAlign="Right">
+                                <Label id="idDedicatedQuotaLabel" text ="{i18n>DedicatedQuota}"></Label>
+                                <table:customData >
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "DedicatedQuota", "columnIndex":"13"\}'/>
+                                </table:customData>
+                                <table:template>
+                                    <Text
+                                        id="idDedicatedQuotaText"
+                                        visible="{= ${HierarchyNodeLevel} === '04' || ${HierarchyNodeLevel} === '05'}"
+                                        text="{ parts: [
+                                            'HierarchyNodeLevel',
+                                            'ParentNode',
+                                            'FormatedCode',
+                                            'quotaModel>/isSearchAllowed'
+                                        ],
+                                        formatter: '.formatDedicatedQuotaValue'
+                                    }"
+                                    />
+                                </table:template>
+                            </table:Column>
+
+                            <!--Document Type-->
+                            <table:Column id="idDocumentTypeColumn" width="12rem" hAlign="Center"  >
+                                <Label id="idDocumentTypeLabel" text="{/#xVWKSxNLP_INTG_C_TREE_QUOTAType/DocumentType/@sap:label}" />
+                                <table:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "DocumentType","columnIndex":"14","additionalProperty":"DocumentType", "leadingProperty":"DocumentTypeTexts"\}'/>
+                                </table:customData>
+                                <table:template>
+                                    <Text id="idDocumentTypeText" wrapping="false" visible="{= ${HierarchyNodeLevel} === '05'}" text="{DocumentTypeTexts}" tooltip="{DocumentTypeTexts}" />
+                                </table:template>
+                            </table:Column>
+                            <!--DUNS Number-->
+                            <table:Column id="idDunsNumberColumn" width="8rem" hAlign="Center">
+                                <Label id="idDunsNumberLabel" text="{/#xVWKSxNLP_INTG_C_TREE_QUOTAType/DunsNumber/@sap:label}" />
+                                <table:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "DunsNumber","columnIndex":"15", "leadingProperty":"DunsNumber"\}'/>
+                                </table:customData>
+                                <table:template>
+                                    <Text id="idDunsNumberText" wrapping="false" visible="{= ${HierarchyNodeLevel} === '05'}" text="{DunsNumber}" tooltip="{DunsNumber}" />
+                                </table:template>
+                            </table:Column>
+                            <table:Column id="idStatusidColumn" width="8rem" hAlign="Center"  >
+                                <Label id="idStatusidLabel" text="{/#xVWKSxNLP_INTG_C_TREE_QUOTAType/StatusId/@sap:label}" />
+                                <table:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "StatusId","columnIndex":"16", "leadingProperty":"StatusId"\}'/>
+                                </table:customData>
+                                <table:template>
+                                    <Text id="idStatusidText" wrapping="false"  visible="{= ${HierarchyNodeLevel} === '05'}" text="{StatusId}" />
+                                </table:template>
+                            </table:Column>
+                            
+                            <table:Column id="idDocumentValidityColumn" width="12rem" hAlign="Center"  >
+                                <Label id="idDocumentValidityLabel" text="{/#xVWKSxNLP_INTG_C_TREE_QUOTAType/DocumentValidity/@sap:label}"></Label>
+                                <table:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "DocumentValidity","columnIndex":"17", "leadingProperty":"DocumentValidity"\}'/>
+                                </table:customData>
+                                <table:template >
+                                    <Text id="idDocumentValidityText" wrapping="false" visible="{= ${HierarchyNodeLevel} === '05'}" text="{path: 'DocumentValidity'}" tooltip="{DocumentValidity}"/>
+                                </table:template>
+                            </table:Column>                            
+                        </table:columns>
+                    </table:TreeTable>
+                </smartTable:SmartTable>
+            </VBox>
+        </f:content>
+        <f:footer>
+            <OverflowToolbar id="OverflowToolbar">
+                <ToolbarSpacer id="idFooterToolbarSpacer" />
+                <Button id="idSaveQuota" text="{i18n>btnSave}" tooltip="{i18n>btnSave}" type="Emphasized" press="onSaveQuotaUpdates" enabled="{this>/saveEnabled}" />
+                <Button id="idCancelSaveQuota" text="{i18n>btnCancel}" tooltip="{i18n>btnCancel}" press="onCancelSaveQuotaUpdates" />
+            </OverflowToolbar>
+        </f:footer>
+    </f:DynamicPage>
+</mvc:View>

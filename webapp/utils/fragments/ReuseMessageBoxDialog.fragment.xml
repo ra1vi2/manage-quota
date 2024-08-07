@@ -1,0 +1,21 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m">
+    <Dialog id="idMessageBoxDialog" title="{i18n>messageBoxTitle}" contentWidth="34.375rem" contentHeight="18.75rem">
+        <VBox id="messageBoxVbox">
+            <List id="idItemList" items="{messageModel>/results}">
+                <CustomListItem>
+                    <HBox>
+                        <core:Icon size="1rem" src="{ path: 'messageModel>Type', formatter: '.formatter.messageIconFormatter'}" 
+                        color="{ path: 'messageModel>Type', formatter: '.formatter.messageIconColorFormatter' }" 
+                        class="sapUiTinyMarginBegin sapUiTinyMarginTopBottom" />
+                        <VBox class="sapUiTinyMarginBegin sapUiTinyMarginTopBottom">
+                            <Text text="{messageModel>Message}" />
+                        </VBox>
+                    </HBox>
+                </CustomListItem>
+            </List>
+        </VBox>
+        <buttons>
+            <Button id="idCloseBtn" text="{i18n>btnClose}" tooltip="{i18n>btnClose}" press="handleClosemessageBoxDialog" />
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

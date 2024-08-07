@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:Reference Uri="https://n1t.onprem:1234/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_AGGREGATION',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="Org.OData.Aggregation.V1" Alias="Aggregation"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://n1t.onprem:1234/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_ANALYTICS',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.Analytics.v1" Alias="Analytics"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://n1t.onprem:1234/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CAPABILITIES',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="Org.OData.Capabilities.V1" Alias="Capabilities"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://n1t.onprem:1234/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CODELIST',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.CodeList.v1" Alias="SAP__CodeList"/>
+        <edmx:Include Namespace="com.sap.vocabularies.CodeList.v1" Alias="CodeList"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://n1t.onprem:1234/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMON',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://n1t.onprem:1234/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMUNICATION',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.Communication.v1" Alias="Communication"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://n1t.onprem:1234/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_MEASURES',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="Org.OData.Measures.V1" Alias="Measures"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://n1t.onprem:1234/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_PERSONALDATA',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.PersonalData.v1" Alias="PersonalData"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://n1t.onprem:1234/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_UI',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://n1t.onprem:1234/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_VALIDATION',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="Org.OData.Validation.V1" Alias="Validation"/>
+    </edmx:Reference>
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="VWKS.NLP_INTG_QUOTA_SRV" xml:lang="en" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <Annotation Term="Core.SchemaVersion" String="1.0.0" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+            <EntityType Name="xVWKSxNLP_INTG_C_TREE_QUOTAType" sap:label="Tree Quota Entity" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="FormatedCode"/>
+                </Key>
+                <Property Name="FormatedCode" Type="Edm.String" Nullable="false" MaxLength="30" sap:hierarchy-node-for="FormatedCode"/>
+                <Property Name="ParentNode" Type="Edm.String" MaxLength="30" sap:hierarchy-parent-node-for="FormatedCode"/>
+                <Property Name="HierarchyRank" Type="Edm.String" MaxLength="8" sap:display-format="NonNegative" sap:label="HierNode ID" sap:quickinfo="Internal ID number of a hierarchy node"/>
+                <Property Name="HierarchyParentRank" Type="Edm.String" MaxLength="8" sap:display-format="NonNegative" sap:label="ID superior node" sap:quickinfo="Parent ID for a hierarchy node"/>
+                <Property Name="HierarchyNodeLevel" Type="Edm.String" MaxLength="2" sap:display-format="NonNegative" sap:hierarchy-level-for="FormatedCode" sap:label="Node level" sap:quickinfo="Level of a hierarchy node"/>
+                <Property Name="HierarchyTreeSize" Type="Edm.String" MaxLength="20"/>
+                <Property Name="DrillDownState" Type="Edm.String" MaxLength="10" sap:hierarchy-drill-state-for="FormatedCode"/>
+                <Property Name="DocumentNo" Type="Edm.String" MaxLength="10" sap:label="Document ID" sap:quickinfo="Document Number"/>
+                <Property Name="DocumentItem" Type="Edm.String" MaxLength="5" sap:display-format="NonNegative" sap:label="Item No"/>
+                <Property Name="documentsubitem" Type="Edm.String" MaxLength="4" sap:display-format="NonNegative" sap:label="Distribution No"/>
+                <Property Name="Material" Type="Edm.String" MaxLength="40" sap:display-format="UpperCase" sap:label="Material" sap:quickinfo="Material Number"/>
+                <Property Name="CompanyCode" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Company Code" sap:value-list="standard"/>
+                <Property Name="Plant" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Plant"/>
+                <Property Name="QuotaValidityFrom" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="Quota Valid from" sap:quickinfo="Quota Validity from"/>
+                <Property Name="QuotaValidityTo" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="Quota Valid from" sap:quickinfo="Quota Validity To"/>
+                <Property Name="SupplierNo" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Supplier Number" sap:quickinfo="Account Number of Supplier" sap:filterable="false"/>
+                <Property Name="SupplierName" Type="Edm.String" MaxLength="80" sap:display-format="UpperCase" sap:label="Supplier Name" sap:quickinfo="Status Bar"/>
+                <Property Name="DunsNumber" Type="Edm.String" MaxLength="60" sap:display-format="UpperCase" sap:label="Duns Number" sap:quickinfo="Identification Number"/>
+                <Property Name="DocumentStatus" Type="Edm.String" MaxLength="60" sap:display-format="UpperCase" sap:label="Document Status" sap:quickinfo="Char 60"/>
+                <Property Name="DocumentValidityFrom" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="Document Validity From" sap:quickinfo="Start of Validity Period"/>
+                <Property Name="DocumentValidityTo" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="Document Validity To" sap:quickinfo="End of Validity Period"/>
+                <Property Name="DocumentDisplayData" Type="Edm.String" MaxLength="30" sap:label="Document" sap:quickinfo="Document Display Number"/>
+                <Property Name="CreatedAt" Type="Edm.DateTimeOffset" Precision="0" sap:label="Created At" sap:quickinfo="UTC Time Stamp in Short Form (YYYYMMDDhhmmss)"/>
+                <Property Name="ChangedAt" Type="Edm.DateTimeOffset" Precision="0" sap:label="Changed At" sap:quickinfo="UTC Time Stamp in Short Form (YYYYMMDDhhmmss)"/>
+                <Property Name="QuotaNumber" Type="Edm.Int16" sap:label="Quota Number"/>
+                <Property Name="DocumentType" Type="Edm.String" MaxLength="2" sap:label="Document Type" sap:value-list="standard"/>
+            </EntityType>
+            <EntityType Name="xVWKSxNLP_QUOTA_I_DOC_CAT_VHType" sap:label="Quota Document Category Value help" sap:value-list="true" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="DocCategory"/>
+                </Key>
+                <Property Name="DocCategory" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:text="DocCategoryText" sap:label="Lower Value" sap:quickinfo="Values for Domains: Single Value/Lower Limit"/>
+                <Property Name="DocCategoryText" Type="Edm.String" MaxLength="60" sap:label="Short Description" sap:quickinfo="Short Text for Fixed Values"/>
+            </EntityType>
+            <EntityType Name="C_ProcmtHubCompanyCodeVHType" sap:label="Company Codes from Connected Systems" sap:value-list="true" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="ProcurementHubSourceSystem"/>
+                    <PropertyRef Name="ProcmtHubCompanyCode"/>
+                </Key>
+                <Property Name="ProcurementHubSourceSystem" Type="Edm.String" Nullable="false" MaxLength="10" sap:label="Connected System ID"/>
+                <Property Name="ProcmtHubCompanyCode" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="UpperCase" sap:text="ProcmtHubCompanyCodeName" sap:label="Conn. Company Code" sap:quickinfo="Connected Company Code"/>
+                <Property Name="ProcmtHubCompanyCodeName" Type="Edm.String" MaxLength="25" sap:label="Company Name" sap:quickinfo="Name of Company Code or Company"/>
+                <Property Name="ProcurementHubSourceSystemName" Type="Edm.String" MaxLength="30" sap:label="Connected System Name"/>
+            </EntityType>
+            <EntityContainer Name="VWKS_NLP_INTG_QUOTA_SRV_Entities" m:IsDefaultEntityContainer="true" sap:message-scope-supported="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="xVWKSxNLP_INTG_C_TREE_QUOTA" EntityType="VWKS.NLP_INTG_QUOTA_SRV.xVWKSxNLP_INTG_C_TREE_QUOTAType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:searchable="true" sap:content-version="1"/>
+                <EntitySet Name="xVWKSxNLP_QUOTA_I_DOC_CAT_VH" EntityType="VWKS.NLP_INTG_QUOTA_SRV.xVWKSxNLP_QUOTA_I_DOC_CAT_VHType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="C_ProcmtHubCompanyCodeVH" EntityType="VWKS.NLP_INTG_QUOTA_SRV.C_ProcmtHubCompanyCodeVHType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:searchable="true" sap:content-version="1"/>
+            </EntityContainer>
+            <Annotations Target="VWKS.NLP_INTG_QUOTA_SRV.xVWKSxNLP_INTG_C_TREE_QUOTAType/CompanyCode" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="Company Codes from Connected Systems"/>
+                        <PropertyValue Property="CollectionPath" String="C_ProcmtHubCompanyCodeVH"/>
+                        <PropertyValue Property="SearchSupported" Bool="true"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="CompanyCode"/>
+                                    <PropertyValue Property="ValueListProperty" String="ProcmtHubCompanyCode"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="ProcurementHubSourceSystem"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="ProcmtHubCompanyCodeName"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="ProcurementHubSourceSystemName"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="VWKS.NLP_INTG_QUOTA_SRV.xVWKSxNLP_INTG_C_TREE_QUOTAType/DocumentType" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="Quota Document Category Value help"/>
+                        <PropertyValue Property="CollectionPath" String="xVWKSxNLP_QUOTA_I_DOC_CAT_VH"/>
+                        <PropertyValue Property="SearchSupported" Bool="false"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="DocumentType"/>
+                                    <PropertyValue Property="ValueListProperty" String="DocCategory"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="DocCategoryText"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="VWKS.NLP_INTG_QUOTA_SRV.VWKS_NLP_INTG_QUOTA_SRV_Entities" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.ApplyMultiUnitBehaviorForSortingAndFiltering" Bool="true"/>
+            </Annotations>
+            <Annotations Target="VWKS.NLP_INTG_QUOTA_SRV.VWKS_NLP_INTG_QUOTA_SRV_Entities/xVWKSxNLP_INTG_C_TREE_QUOTA" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Capabilities.FilterRestrictions">
+                    <Record>
+                        <PropertyValue Property="NonFilterableProperties">
+                            <Collection>
+                                <PropertyPath>SupplierNo</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="VWKS.NLP_INTG_QUOTA_SRV.C_ProcmtHubCompanyCodeVHType" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.SemanticKey">
+                    <Collection>
+                        <PropertyPath>ProcmtHubCompanyCode</PropertyPath>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <atom:link rel="self" href="https://n1t.onprem:1234/sap/opu/odata/vwks/NLP_INTG_QUOTA_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+            <atom:link rel="latest-version" href="https://n1t.onprem:1234/sap/opu/odata/vwks/NLP_INTG_QUOTA_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

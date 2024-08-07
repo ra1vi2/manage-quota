@@ -1,0 +1,61 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form" xmlns:l="sap.ui.layout">
+    <Dialog id="idAddQuotaDialog" title="{i18n>AddQuotaText}" contentWidth="80%" contentHeight="80%" verticalScrolling="true" beforeOpen="onBeforeOpen" afterClose="onAfterClose">
+        <l:BlockLayout id="BlockLayout">
+            <l:BlockLayoutRow id="idBlockLayoutRow1">
+                <l:BlockLayoutCell id="idBlockLayoutCell1">
+                    <Label id="idAddQuotaDialogMaterialLabel" text="{i18n>lblMaterial}" labelFor="idAddQuotaDialogMaterial" class="sapUiTinyMarginEnd" />
+                    <Text id="idAddQuotaDialogMaterial" text="{AddQuotaDialogData>/Material}" />
+                </l:BlockLayoutCell>
+                <l:BlockLayoutCell id="idAddQuotaBlockLayoutCell2">
+                    <Label id="idAddQuotaLabelCompanyCode" text="{i18n>lblCompanyCode}" labelFor="idAddQuotaDialogCompanyCode" class="sapUiTinyMarginEnd" />
+                    <Text id="idAddQuotaDialogCompanyCode" text="{AddQuotaDialogData>/CompanyCodeData}" />
+                </l:BlockLayoutCell>
+                <l:BlockLayoutCell id="idAddQuotaBlockLayoutCell3">
+                    <Label id="idLabelAddQuotaDialogPlant" text="{i18n>lblPlant}" labelFor="idAddQuotaDialogPlant" class="sapUiTinyMarginEnd" />
+                    <ExpandableText id="idAddQuotaDialogPlant" text="{AddQuotaDialogData>/PlantData}" />
+                </l:BlockLayoutCell>
+            </l:BlockLayoutRow>
+        </l:BlockLayout>
+        <Panel id="idAddQuotaPanel1" width="auto" class="sapUiResponsiveMargin" headerText="{i18n>lblSelectValidity}">
+            <FlexBox id="idAddQuotaFlexBox1" alignItems="Start" justifyContent="Start">
+                <Label id="idAddQuotaLabelSelectValidityFrom" text="{i18n>lblSelectValidityFrom}" class="sapUiTinyMarginTop sapUiSmallMarginBegin" labelFor="idAddQuotaValidityFrom" required="true" />
+                <DatePicker
+                    id="idAddQuotaValidityFrom"
+                    change="onAddQuotaValidityFromDateChange"
+                    minDate="{this>/AddQuotaValidFromMinDate}"
+                    value="{path : 'AddQuotaDialogData>/ValidityFrom' , type : 'sap.ui.model.type.Date', formatOptions: {UTC: true}}"
+                    valueFormat="yyyyMMdd"
+                    class="sapUiSmallMarginBottom sapUiMediumMarginEnd sapUiSmallMarginBegin"
+                />
+                <Label id="idLabelSelectValidityTo" text="{i18n>lblSelectValidityTo}" class="sapUiTinyMarginTop sapUiMediumMarginBegin" labelFor="idAddQuotaValidityTo" required="true" />
+                <DatePicker id="idAddQuotaValidityTo" value="{path : 'AddQuotaDialogData>/ValidityTo' , type : 'sap.ui.model.type.Date' , formatOptions: {UTC: true}}" valueFormat="yyyyMMdd" change="onAddQuotaValidityToDateChange" class="sapUiSmallMarginBottom sapUiSmallMarginBegin" />
+            </FlexBox>
+            <CheckBox id="idUseCurrentQuotaCheck" text="{i18n>lblUseCurrentQuotaCheck}" selected="{AddQuotaDialogData>/UseCurrentQuota}" />
+        </Panel>
+
+        <Panel id="idAddQuotaPanel2" width="auto" class="sapUiResponsiveMargin">
+            <Table id="idAddQuotaContractList" growing="true">
+                <headerToolbar>
+                    <OverflowToolbar id="idAddQuotaOverflowToolbar1">
+                        <content>
+                            <Title id="idAddQuotaTitle1" text="{i18n>listOfContractHdr}" level="H2" />
+                        </content>
+                    </OverflowToolbar>
+                </headerToolbar>
+                <columns>
+                    <Column id="idAddQuotaColumnContractDetail" width="20em">
+                        <Text id="idAddContractDetailText" text="{i18n>lblContractDetail}" />
+                    </Column>
+                    <Column id="idColumnQuotaNumber" width="10em">
+                        <Text id="idAddQuotaNumberText" text="{i18n>lblQuotaNumber}" />
+                    </Column>
+                </columns>
+            </Table>
+        </Panel>
+
+        <buttons>
+            <Button id="idBtnAddQuotaSave" tooltip="{i18n>btnSave}" text="{i18n>btnSave}" type="Emphasized" press="onPressAddQuotaSave" />
+            <Button id="idBtnAddQuotaCancel" tooltip="{i18n>btnCancel}" text="{i18n>btnCancel}" press="onPressAddQuotaCancel" />
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

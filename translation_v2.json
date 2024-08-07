@@ -1,0 +1,22 @@
+{
+    "comment": "",
+    "collections": [
+        {
+            "collectionName": "Manage Quota Application",
+            "folders": [
+                {
+                    "startingFolderPath": "webapp/i18n",
+                    "sourceFilters": [
+                        "**/*.properties"
+                    ]
+                }
+            ]
+        }
+    ],
+    "defaultConfiguration": {
+        "targetFolderPath": ".",
+        "pseudoLocFolderPath": ",",
+        "oneQFolderPath": ".",
+        "targetFileNamingConvention": "[filename]_[langCode].[extension]"
+    }
+}

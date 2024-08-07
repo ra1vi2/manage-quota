@@ -1,0 +1,38 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+    <Dialog id="idShowUpplierQuotaDialog" title="{i18n>SupplierQuotaHeader}" contentWidth="70%" contentHeight="70%" horizontalScrolling="false" verticalScrolling="true" beforeOpen="onBeforeOpen" afterClose="onAfterClose">
+        <Panel id="idPanel1" class="sapUiResponsiveMargin" width="90%">
+            <Table id="idShowSupplierQuotaTable" growing="true" items="{supplierQuota>/}">
+                <headerToolbar>
+                    <OverflowToolbar id="idShowSupplierOverflowToolbar1">
+                        <content>
+                            <Title id="idShowSupplierTitleSupplierQuotaLength" text="{i18n>items}({supplierQuota>/length})" level="H2" />
+                        </content>
+                    </OverflowToolbar>
+                </headerToolbar>
+                <columns>
+                    <Column id="idShowSupplierColumnMaterialText">
+                        <Text id="idShowSupplierMaterialText" text="{i18n>lblMaterialTxt}" />
+                    </Column>
+                    <Column id="idShowSupplierColumnSupplierText">
+                        <Text id="idShowSupplierText" text="{i18n>lblSupplierTxt}" />
+                    </Column>
+                    <Column id="idShowSupplierColumnAvgQuota" hAlign="End">
+                        <Text id="idShowSupplierAvgQuotaText" text="{i18n>lblAvgQuota}" />
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem id="idShowSupplierColumnListItem1" vAlign="Middle">
+                        <cells>
+                            <Text id="idShowSupplierTextMaterial" text="{supplierQuota>Material}" />
+                            <Text id="idShowSupplierTextSupplier" text="{supplierQuota>Supplier}" />
+                            <Text id="idShowSupplierTextQuota" text="{supplierQuota>QuotaAggr}" />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </Panel>
+        <buttons>
+            <Button id="idBtnShowSupplierQuotaClose" tooltip="{i18n>btnClose}" text="{i18n>btnClose}" type="Emphasized" press="onPressSupplierQuotaClose" />
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=https://sap.github.io/ui5-tooling/schema/ui5.yaml.json
+
+specVersion: "2.4"
+metadata:
+  name: vwks.nlp.s2p.mm.mng.quota
+type: application
+builder:
+  resources:
+    excludes:
+      - /test/**
+      - /localService/**
+  customTasks:
+    - name: deploy-to-abap
+      afterTask: generateCachebusterInfo
+      configuration:
+        target:
+          destination: n1t_010_PP
+          url: http://n1t.onprem:1234
+        credentials:
+            username: env:UI5_USERNAME
+            password: env:UI5_PASSWORD
+        app:
+          name: /VWKS/NLP_MNGQUOTA
+          description: Manage Quota Application
+          package: /VWKS/NLP_ORDERING_UI
+          transport: env:TR_NUMBER
